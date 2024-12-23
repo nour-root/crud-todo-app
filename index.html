@@ -6,7 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
-  <body>
+  <body class="bg-slate-700 container mx-auto max-w-3xl px-2 sm:px-0">
+    <main class="h-dvh my-12">
+      <form id="todo-form" class="flex flex-col gap-4">
+        <div class="flex gap-4 w-full">
+          <input
+            type="text"
+            class="rounded-md py-2 px-3 text-sm w-full"
+            name="title"
+            id="title"
+            placeholder="Title"
+            minlength="3"
+            required
+          />
+          <select
+            name="priority"
+            class="rounded-md py-2 px-3 text-sm"
+            id="priority"
+            required
+          >
+            <option value="" class="text-slate-300">Select Priority</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
+        <textarea
+          class="rounded-md py-2 px-3 text-sm w-full min-h-32"
+          name="description"
+          id="description"
+          placeholder="Description"
+          required
+          minlength="3"
+        ></textarea>
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            class="bg-black rounded-md text-white px-4 py-2"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </main>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
