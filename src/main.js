@@ -1,12 +1,23 @@
 import "./style.css";
-
+import todoCard from "./components/todo-card";
+import addToArray from "./components/addToArrayItems";
+import getTodayDate from "./components/getDate";
 const form = document.getElementById("todo-form");
-
+const container = document.getElementById("todos");
+let arrIrems = [];
+let count = 0;
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const title = document.getElementById("title").value;
   const priority = document.getElementById("priority").value;
   const description = document.getElementById("description").value;
-  console.log({ title, priority, description });
+  let item = document.createElement("div");
+  let date = getTodayDate();
+  item.id = `${count}`;
+  let task = addToArray(count, title, priority, description, date);
+  arrIrems.push(task);
+  count++;
+  item.innerHTML = todoCard(task);
+  container.appendChild(item);
   form.reset();
 });
