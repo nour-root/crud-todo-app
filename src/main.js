@@ -19,99 +19,95 @@ const container = document.getElementById("todos");
 const btnClick = document.querySelector("#add");
 //
 form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const title = document.getElementById("title").value;
-  const priority = document.getElementById("priority").value;
-  const description = document.getElementById("description").value;
-  //PUT
-  if (btnClick.getAttribute("name") === "update") {
-    const id = btnClick.getAttribute("id");
-    updateTodo(id, title, description, priority)
-      .then(() => {
-        form.reset();
-        main();
-      })
-      .catch();
-  } else if (btnClick.getAttribute("name") === "add") {
-    //POST
-    createTodo(title, description, priority)
-      .then(() => {
-        form.reset();
-        main();
-      })
-      .catch();
-  }
+	e.preventDefault();
+	const title = document.getElementById("title").value;
+	const priority = document.getElementById("priority").value;
+	const description = document.getElementById("description").value;
+	//PUT
+	if (btnClick.getAttribute("name") === "update") {
+		const id = btnClick.getAttribute("id");
+		updateTodo(id, title, description, priority)
+			.then(() => {
+				form.reset();
+				main();
+			})
+			.catch();
+	} else if (btnClick.getAttribute("name") === "add") {
+		//POST
+		createTodo(title, description, priority)
+			.then(() => {
+				form.reset();
+				main();
+			})
+			.catch();
+	}
 });
 const handleListener = () => {
-  //delete
-  const deleteBtns = document.querySelectorAll("#delete");
-  deleteBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const datasetId = e.target.parentElement.dataset.id;
-      const selectedItem = document.getElementById(`task-${datasetId}`);
-      deleteTodo(datasetId)
-        .then(() => {
-          selectedItem.remove();
-          main();
-        })
-        .catch(() => {});
-    });
-  });
-  //complete
-  const checkBtns = document.querySelectorAll("#checked-toggle");
-  checkBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const tempId = e.target.dataset.task.split("-")[1];
-      const isChecked = e.target.checked;
-      toggleTodo(tempId, isChecked)
-        .then(() => {
-          main();
-        })
-        .catch(() => {});
-    });
-  });
-  //upate
-  const updateBtns = document.querySelectorAll("#edit");
-  updateBtns.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      const dataset_Id = e.target.parentElement.dataset.id;
-      btnClick.name = "update";
-      btnClick.id = `${dataset_Id}`;
-      btnClick.innerText = "Update";
-      getAllTodos().then(async (t) => {
-        let data = await t.json();
-        data.forEach((task) => {
-          if (parseInt(dataset_Id) === task.id) {
-            document.getElementById("title").value = task.title;
-            document.getElementById("priority").value = task.priority;
-            document.getElementById("description").value = task.body;
-          }
-        });
-      });
-    });
-  });
+	//delete
+	const deleteBtns = document.querySelectorAll("#delete");
+	deleteBtns.forEach((btn) => {
+		btn.addEventListener("click", (e) => {
+			const datasetId = e.target.parentElement.dataset.id;
+			const selectedItem = document.getElementById(`task-${datasetId}`);
+			deleteTodo(datasetId)
+				.then(() => {
+					selectedItem.remove();
+					main();
+				})
+				.catch(() => {});
+		});
+	});
+	//complete
+	const checkBtns = document.querySelectorAll("#checked-toggle");
+	checkBtns.forEach((btn) => {
+		btn.addEventListener("click", (e) => {
+			const tempId = e.target.dataset.task.split("-")[1];
+			const isChecked = e.target.checked;
+			toggleTodo(tempId, isChecked)
+				.then(() => {
+					main();
+				})
+				.catch(() => {});
+		});
+	});
+	//upate
+	const updateBtns = document.querySelectorAll("#edit");
+	updateBtns.forEach((btn) => {
+		btn.addEventListener("click", (e) => {
+			const dataset_Id = e.target.parentElement.dataset.id;
+			btnClick.name = "update";
+			btnClick.id = `${dataset_Id}`;
+			btnClick.innerText = "Update";
+			document.getElementById("title").value =
+				e.target.parentElement.dataset.title;
+			document.getElementById("priority").value =
+				e.target.parentElement.dataset.priority;
+			document.getElementById("description").value =
+				e.target.parentElement.dataset.body;
+		});
+	});
 };
 const main = () => {
-  container.innerHTML = loader();
-  getAllTodos()
-    .then(async (res) => {
-      const data = await res.json();
-      const tempArray = [];
-      container.innerHTML = "";
-      if (data.length > 0) {
-        data.forEach((task) => {
-          const structuredData = createTaskItem(task);
-          const itemComponent = todoCard(structuredData);
-          tempArray.push(itemComponent);
-        });
-        container.innerHTML = tempArray.join("");
-      }
-      handleListener();
-    })
-    .catch(() => {});
-  btnClick.name = "add";
-  btnClick.id = "add";
-  btnClick.innerText = "Submit";
+	container.innerHTML = loader();
+	getAllTodos()
+		.then(async (res) => {
+			const data = await res.json();
+			const tempArray = [];
+			container.innerHTML = "";
+			if (data.length > 0) {
+				data.forEach((task) => {
+					const structuredData = createTaskItem(task);
+					const itemComponent = todoCard(structuredData);
+					tempArray.push(itemComponent);
+				});
+				container.innerHTML = tempArray.join("");
+			}
+			handleListener();
+		})
+		.catch(() => {});
+	btnClick.name = "add";
+	btnClick.id = "add";
+	btnClick.innerText = "Submit";
 };
 
 main();
