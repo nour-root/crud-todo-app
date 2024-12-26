@@ -16,7 +16,7 @@ import updateTodo from "./services/updateTodo";
 //
 const form = document.getElementById("todo-form");
 const container = document.getElementById("todos");
-const btnClick = document.getElementById("add");
+const btnClick = document.querySelector("#add");
 //
 form.addEventListener("submit", (e) => {
   e.preventDefault();
