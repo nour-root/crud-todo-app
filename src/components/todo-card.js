@@ -1,14 +1,14 @@
 const todoCard = (task) => {
-	return ` <div
+  return ` <div
             name="item"
             id="task-${task.id}"
           class="flex flex-col gap-[10px] border-[1px]  ${
-						task.priority === "high"
-							? `border-red-500`
-							: task.priority === "medium"
-							? `border-orange-500`
-							: `border-green-500`
-					} px-10 py-4 rounded-md shadow-md hover:shadow-lg transition-shadow duration-300"
+            task.priority === "high"
+              ? `border-red-500`
+              : task.priority === "medium"
+              ? `border-orange-500`
+              : `border-green-500`
+          } px-10 py-4 rounded-md shadow-md hover:shadow-lg transition-shadow duration-300"
         >
           <div class="title flex justify-between items-center">
             <h3 class="capitalize text-sm font-bold">${task.title}</h3>
@@ -18,23 +18,25 @@ const todoCard = (task) => {
             <div class="flex items-center">
               <div class="flex items-center gap-2">
                 <input type="checkbox" ${
-									task.complete ? `checked` : ``
-								} name="isFinish" id="checked-toggle" data-task="task-${task.id}" />
+                  task.complete ? `checked` : ``
+                } name="isFinish" id="checked-toggle" data-task="task-${
+    task.id
+  }" />
                 <span class="${
-									task.priority === "high"
-										? `text-red-500`
-										: task.priority === "medium"
-										? `text-orange-500`
-										: `text-green-500`
-								} -mt-1">${task.priority}</span>
+                  task.priority === "high"
+                    ? `text-red-500`
+                    : task.priority === "medium"
+                    ? `text-orange-500`
+                    : `text-green-500`
+                } -mt-1">${task.priority}</span>
               </div>
             </div>
             <div class="icons flex items-center gap-2">
               <button type="button" id="edit" data-id="${task.id}">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="21"
-                  height="21"
+                  width="35"
+                  height="26"
                   viewBox="0 0 24 24"
                 >
                   <path

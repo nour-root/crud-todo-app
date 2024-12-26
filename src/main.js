@@ -13,23 +13,35 @@ import deleteTodo from "./services/deleteTodo";
 import toggleTodo from "./services/toggleTodo";
 import createTodo from "./services/createTodo";
 import updateTodo from "./services/updateTodo";
-
+//
 const form = document.getElementById("todo-form");
 const container = document.getElementById("todos");
-
+const btnClick = document.getElementById("add");
+//
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const title = document.getElementById("title").value;
   const priority = document.getElementById("priority").value;
   const description = document.getElementById("description").value;
-  createTodo(title, description, priority)
-    .then(() => {
-      form.reset();
-      main();
-    })
-    .catch();
+  //PUT
+  if (btnClick.getAttribute("name") === "update") {
+    const id = btnClick.getAttribute("id");
+    updateTodo(id, title, description, priority)
+      .then(() => {
+        form.reset();
+        main();
+      })
+      .catch();
+    //POST
+  } else if (btnClick.getAttribute("name") === "add") {
+    createTodo(title, description, priority)
+      .then(() => {
+        form.reset();
+        main();
+      })
+      .catch();
+  }
 });
-//delete
 const handleListener = () => {
   //delete
   const deleteBtns = document.querySelectorAll("#delete");
@@ -38,27 +50,13 @@ const handleListener = () => {
       const datasetId = e.target.parentElement.dataset.id;
       const selectedItem = document.getElementById(`task-${datasetId}`);
       deleteTodo(datasetId)
-        .then((data) => {
+        .then(() => {
           selectedItem.remove();
           main();
         })
         .catch(() => {});
     });
-    //update
-    const updateBtns = document.querySelectorAll("#edit");
-    updateBtns.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const dataset_Id = e.target.parentElement.dataset.id;
-        // updateTodo(dataset_Id)
-        //   .then(() => {
-        //     console.log(dataset_Id);
-        //     // console.log(data);
-        //   })
-        //   .catch();
-      });
-    });
   });
-  //
   //complete
   const checkBtns = document.querySelectorAll("#checked-toggle");
   checkBtns.forEach((btn) => {
@@ -70,6 +68,26 @@ const handleListener = () => {
           main();
         })
         .catch(() => {});
+    });
+  });
+  //upate
+  const updateBtns = document.querySelectorAll("#edit");
+  updateBtns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const dataset_Id = e.target.parentElement.dataset.id;
+      btnClick.name = "update";
+      btnClick.id = `${dataset_Id}`;
+      btnClick.innerText = "Update";
+      getAllTodos().then(async (t) => {
+        let data = await t.json();
+        data.forEach((task) => {
+          if (parseInt(dataset_Id) === task.id) {
+            document.getElementById("title").value = task.title;
+            document.getElementById("priority").value = task.priority;
+            document.getElementById("description").value = task.body;
+          }
+        });
+      });
     });
   });
 };
@@ -91,6 +109,9 @@ const main = () => {
       handleListener();
     })
     .catch(() => {});
+  btnClick.name = "add";
+  btnClick.id = "add";
+  btnClick.innerText = "Submit";
 };
 
 main();
