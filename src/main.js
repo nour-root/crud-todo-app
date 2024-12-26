@@ -32,8 +32,8 @@ form.addEventListener("submit", (e) => {
         main();
       })
       .catch();
-    //POST
   } else if (btnClick.getAttribute("name") === "add") {
+    //POST
     createTodo(title, description, priority)
       .then(() => {
         form.reset();

@@ -33,17 +33,7 @@ const todoCard = (task) => {
             </div>
             <div class="icons flex items-center gap-2">
               <button type="button" id="edit" data-id="${task.id}">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="35"
-                  height="28"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#22c55e"
-                    d="M16.293 2.293a1 1 0 0 1 1.414 0l4 4a1 1 0 0 1 0 1.414l-13 13A1 1 0 0 1 8 21H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 .293-.707l10-10l3-3zM14 7.414l-9 9V19h2.586l9-9L14 7.414zm4 1.172L19.586 7L17 4.414L15.414 6L18 8.586z"
-                  />
-                </svg>
+                <img src="/assets/edit.svg" alt="">
               </button>
               <button type="button" id="delete" data-id="${task.id}">
                 <img src="/assets/delete.svg" />
